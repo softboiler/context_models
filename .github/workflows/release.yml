@@ -9,6 +9,9 @@ on:
 defaults:
   run:
     shell: "pwsh"
+env:
+  UV_CACHE_DIR: ".cache/uv"
+  UV_SYSTEM_PYTHON: "true"
 jobs:
   release:
     permissions:

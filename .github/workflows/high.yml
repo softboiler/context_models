@@ -9,6 +9,7 @@ defaults:
     shell: "pwsh"
 env:
   UV_CACHE_DIR: ".cache/uv"
+  UV_SYSTEM_PYTHON: "true"
   SYNC_PY_HIGH: "true"
 jobs:
   sync:
