@@ -53,9 +53,7 @@ function Sync-Uv {
     $Sep = $IsWindows ? ';' : ':'
     $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
-    if ($Env:CI) {
-        ("PATH=$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile
-    }
+    if ($Env:CI) { ("PATH=$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile }
     # ? Install `uv`
     if ((!$Uv -or !(& $Uv --version | Select-String $Version))) {
         'Installing uv' | Write-Progress

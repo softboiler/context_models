@@ -14,8 +14,8 @@ Param(
 )
 begin {
     . scripts/Initialize-Shell.ps1
-    $Copier = 'copier@9.2.0'
     $Template = 'submodules/template'
+    $Copier = 'copier@9.2.0'
 }
 process {
     if (($Template | Test-Path) -and !$Stay) {
