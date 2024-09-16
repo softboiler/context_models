@@ -54,7 +54,7 @@ function Sync-Uv {
     $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
     if ($CI) {
-        ("PATH=$Bin$Sep$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile
+        ("PATH=$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile
     }
     # ?
     if ((!$Uv -or !(& $Uv --version | Select-String $Version))) {
