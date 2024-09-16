@@ -29,14 +29,16 @@ function Set-Env {
 
     # ? Sync the virtual environment
     Sync-Uv
-    if (!(Test-Path '.venv')) { uv venv --python $Version }
-    if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
-    if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
-        'Virtual environment is the wrong Python version.' | Write-Progress -Info
-        'Creating virtual environment with correct Python version' | Write-Progress
-        Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
-        uv venv --python $Version
+    if (!$CI) {
+        if (!(Test-Path '.venv')) { uv venv --python $Version }
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
+        if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
+            'Virtual environment is the wrong Python version.' | Write-Progress -Info
+            'Creating virtual environment with correct Python version' | Write-Progress
+            Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
+            uv venv --python $Version
+            if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
+        }
     }
     if (!(Get-Command 'context_models_tools' -ErrorAction 'Ignore')) {
         'Installing tools' | Write-Progress

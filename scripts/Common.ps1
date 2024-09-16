@@ -43,7 +43,7 @@ function Sync-Uv {
     )
     if (Get-Command 'uv' -ErrorAction 'Ignore') { $Uv = 'uv' }
     else {
-        $Uv = Get-Item 'bin/uv.???' -ErrorAction 'Ignore'
+        $Uv = Get-Item 'bin/uv.*' -ErrorAction 'Ignore'
     }
     # ? Prepend local `bin` to PATH
     if (!($Bin = Get-Item 'bin' -ErrorAction 'Ignore')) {
@@ -56,7 +56,7 @@ function Sync-Uv {
     if ($CI) {
         ("PATH=$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile
     }
-    # ?
+    # ? Install `uv`
     if ((!$Uv -or !(& $Uv --version | Select-String $Version))) {
         'Installing uv' | Write-Progress
         $OrigCargoHome = $Env:CARGO_HOME
@@ -66,6 +66,6 @@ function Sync-Uv {
         else { curl --proto '=https' --tlsv1.2 -LsSf "https://github.com/astral-sh/uv/releases/download/$Version/uv-installer.sh" | sh }
         if ($OrigCargoHome) { $Env:CARGO_HOME = $OrigCargoHome }
         'uv installed' | Write-Progress -Done
-        return Get-Item 'bin/uv.???'
+        return Get-Item 'bin/uv.*'
     }
 }
