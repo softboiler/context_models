@@ -44,13 +44,18 @@ function Sync-Uv {
     if (Get-Command 'uv' -ErrorAction 'Ignore') { $Uv = 'uv' }
     else {
         $Uv = Get-Item 'bin/uv.???' -ErrorAction 'Ignore'
-        # ? Prepend local `bin` to PATH
-        if (!($Bin = Get-Item 'bin' -ErrorAction 'Ignore')) {
-            New-Item 'bin' -ItemType 'Directory'
-        }
-        $Sep = $IsWindows ? ';' : ':'
-        $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
     }
+    # ? Prepend local `bin` to PATH
+    if (!($Bin = Get-Item 'bin' -ErrorAction 'Ignore')) {
+        New-Item 'bin' -ItemType 'Directory'
+        $Bin = Get-Item 'bin'
+    }
+    $Sep = $IsWindows ? ';' : ':'
+    $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
+    if ($CI) {
+        ("PATH=$Bin$Sep$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile
+    }
+    # ?
     if ((!$Uv -or !(& $Uv --version | Select-String $Version))) {
         'Installing uv' | Write-Progress
         $OrigCargoHome = $Env:CARGO_HOME

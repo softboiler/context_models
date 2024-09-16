@@ -18,10 +18,9 @@ Param(
 $High = $High ? $High : [bool]$Env:SYNC_PY_HIGH
 $CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
 $Devcontainer = $Env:SYNC_PY_DISABLE_DEVCONTAINER ? $null : $Env:DEVCONTAINER
-$Env:UV_SYSTEM_PYTHON = $CI ? 'true' : $null
 if (!$Release -and $CI) { $msg = 'CI' }
 elseif ($Devcontainer) { $msg = 'devcontainer' }
-elseif ($Release) {$msg = 'release'}
+elseif ($Release) { $msg = 'release' }
 "Will run $msg steps" | Write-Progress -Info
 
 if ($Release) {

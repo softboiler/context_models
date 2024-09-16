@@ -18,7 +18,7 @@ dependencies = [
   "toml==0.10.2 ; python_version < '3.11'",
 ]
 [project.scripts]
-"context_models-tools" = "context_models_tools.__main__:main"
+"context-models-tools" = "context_models_tools.__main__:main"
 "context_models_tools" = "context_models_tools.__main__:main"
 
 [tool.fawltydeps]

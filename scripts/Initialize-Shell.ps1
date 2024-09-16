@@ -40,7 +40,8 @@ function Set-Env {
     }
     if (!(Get-Command 'context_models_tools' -ErrorAction 'Ignore')) {
         'Installing tools' | Write-Progress
-        uv tool install --python $Version --resolution 'lowest-direct' 'scripts/.'
+        $Env:UV_TOOL_BIN_DIR = Get-Item 'bin'
+        uv tool install --force --python $Version --resolution 'lowest-direct' 'scripts/.'
         'Tools installed' | Write-Progress -Done
     }
 
@@ -72,7 +73,6 @@ function Set-Env {
         }
     }
     @($Lines, $NewLines) | Set-Content $EnvFile
-    if ($CI) {"PATH=$(Get-Item 'bin')$Sep$Env:PATH" | Add-Content $EnvFile}
 }
 
 Set-Env
