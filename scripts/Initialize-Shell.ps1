@@ -72,6 +72,7 @@ function Set-Env {
         }
     }
     @($Lines, $NewLines) | Set-Content $EnvFile
+    if ($CI) {"PATH=$(Get-Item 'bin')$Sep$Env:PATH" | Add-Content $EnvFile}
 }
 
 Set-Env
