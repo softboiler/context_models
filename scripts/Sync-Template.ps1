@@ -14,6 +14,7 @@ Param(
 )
 begin {
     . scripts/Initialize-Shell.ps1
+    $Copier = 'copier@9.2.0'
     $Template = 'submodules/template'
     $TemplateExists = $Template | Test-Path
     $Template = $TemplateExists ? $Template : 'origin/main'
@@ -37,9 +38,9 @@ process {
     elseif (!$TemplateExists -and $Stay) { return }
     $Ref = Get-Ref $Ref
     if ($Recopy) {
-        if ($Prompt) { return copier recopy --overwrite --vcs-ref=$Ref }
-        return copier recopy --overwrite --defaults --vcs-ref=$Ref
+        if ($Prompt) { return uvx $Copier recopy --overwrite --vcs-ref=$Ref }
+        return uvx $Copier recopy --overwrite --defaults --vcs-ref=$Ref
     }
-    if ($Prompt) { return copier update --vcs-ref=$Ref }
-    return copier update --defaults --vcs-ref=$Ref
+    if ($Prompt) { return uvx $Copier update --vcs-ref=$Ref }
+    return uvx $Copier update --defaults --vcs-ref=$Ref
 }
