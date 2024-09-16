@@ -18,11 +18,6 @@ begin {
     $Template = 'submodules/template'
     $TemplateExists = $Template | Test-Path
     $Template = $TemplateExists ? $Template : 'origin/main'
-    function Get-Ref {
-        Param($Ref)
-        $TemplateRev = $TemplateExists ? "HEAD:$Template" : 'origin/main'
-        return ($Ref -eq 'HEAD') ? (git rev-parse $TemplateRev) : $Ref
-    }
 }
 process {
     if ($TemplateExists -and !$Stay) {
@@ -36,7 +31,6 @@ process {
         $ErrorActionPreference = $origPreference
     }
     elseif (!$TemplateExists -and $Stay) { return }
-    $Ref = Get-Ref $Ref
     if ($Recopy) {
         if ($Prompt) { return uvx $Copier recopy --overwrite --vcs-ref=$Ref }
         return uvx $Copier recopy --overwrite --defaults --vcs-ref=$Ref
