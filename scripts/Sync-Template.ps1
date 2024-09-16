@@ -16,14 +16,12 @@ begin {
     . scripts/Initialize-Shell.ps1
     $Copier = 'copier@9.2.0'
     $Template = 'submodules/template'
-    $TemplateExists = $Template | Test-Path
-    $Template = $TemplateExists ? $Template : 'origin/main'
 }
 process {
-    if ($TemplateExists -and !$Stay) {
+    if (($Template | Test-Path) -and !$Stay) {
         git submodule update --init --remote --merge $Template
         git add .
-        $Msg = "Update template digest to $(Get-Ref $Ref)"
+        $Msg = "Update template digest to $(git rev-parse "HEAD:$Template")"
         $origPreference = $ErrorActionPreference
         $ErrorActionPreference = 'SilentlyContinue'
         if ($NoVerify) { git commit --no-verify -m $Msg }
