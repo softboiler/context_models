@@ -23,7 +23,8 @@ catch [System.Management.Automation.NativeCommandExitException] { $HadSubmodules
 scripts/Sync-Py.ps1
 Set-Env
 git add .
-git commit --no-verify -m 'Lock'
+try { git commit --no-verify -m 'Lock' }
+catch [System.Management.Automation.NativeCommandExitException] { $AlreadyLocked = $true }
 
 # ? Modify GitHub repo if there were not already commits in this repo
 if ($Fresh) {
