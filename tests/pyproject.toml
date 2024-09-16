@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core==3.9.0"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "context_models_tests"
+version = "0.0.0"
+description = "Tests."
+dependencies = [
+  # ? Core testing
+  "pytest-cov==5.0.0",
+  "pytest-custom-exit-code==0.3.0",
+  "pytest-github-actions-annotate-failures==0.2.0",
+  "pytest==8.2.2",
+]
+
+[tool.fawltydeps]
+deps = ["tests/pyproject.toml"]
+code = ["tests/context_models_tests"]
+ignore_undeclared = [
+  "context_models_docs",
+  "context_models_tests",
+  "context_models_tools",
+  "context_models",
+]
+ignore_unused = [
+  # ? Core testing tools or plugins
+  "pytest-cov",
+  "pytest-custom-exit-code",
+  "pytest-github-actions-annotate-failures",
+  "pytest",
+]

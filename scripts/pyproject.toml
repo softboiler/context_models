@@ -1,0 +1,39 @@
+[build-system]
+requires = ["flit_core==3.9.0"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "context_models_tools"
+version = "0.0.0"
+description = "Tools."
+dependencies = [
+  # ? Core script tools
+  "copier==9.2.0",
+  "cyclopts==2.9.3",
+  "dulwich==0.22.1",
+  "ipython==8.26.0",
+  "pipx==1.6.0",
+  "pydantic-settings>=2.5.2",
+  "python-dotenv==1.0.1",
+  "toml==0.10.2 ; python_version < '3.11'",
+]
+[project.scripts]
+"context_models-tools" = "context_models_tools.__main__:main"
+"context_models_tools" = "context_models_tools.__main__:main"
+
+[tool.fawltydeps]
+deps = ["scripts/pyproject.toml"]
+code = ["scripts/context_models_tools"]
+ignore_undeclared = [
+  "context_models_docs",
+  "context_models_tests",
+  "context_models_tools",
+  "context_models",
+]
+ignore_unused = [
+  # ? Core script tools
+  "copier", # For template sync
+  "pipx",   # For `pipx run` of scripts with dependencies isolated by PEP 723
+  # ? Other deps
+  "ipython", # Used for local experimentation
+]
