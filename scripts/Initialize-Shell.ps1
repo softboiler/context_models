@@ -29,7 +29,7 @@ function Set-Env {
 
     # ? Sync the virtual environment
     Sync-Uv
-    if (!$CI) {
+    if (!$Env:CI) {
         if (!(Test-Path '.venv')) { uv venv --python $Version }
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
         if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {

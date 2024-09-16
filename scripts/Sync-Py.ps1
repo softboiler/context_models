@@ -16,9 +16,8 @@ Param(
 
 'CHECKING ENVIRONMENT TYPE' | Write-Progress
 $High = $High ? $High : [bool]$Env:SYNC_PY_HIGH
-$CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
 $Devcontainer = $Env:SYNC_PY_DISABLE_DEVCONTAINER ? $null : $Env:DEVCONTAINER
-if (!$Release -and $CI) { $msg = 'CI' }
+if (!$Release -and $Env:CI) { $msg = 'CI' }
 elseif ($Devcontainer) { $msg = 'devcontainer' }
 elseif ($Release) { $msg = 'release' }
 "Will run $msg steps" | Write-Progress -Info
@@ -29,7 +28,7 @@ if ($Release) {
     return
 }
 
-if (!$CI -and !$Devcontainer -and
+if (!$Env:CI -and !$Devcontainer -and
     (Get-Command -Name 'code' -ErrorAction 'Ignore') -and
     ($Env:PYRIGHT_PYTHON_PYLANCE_VERSION)
 ) {
@@ -59,7 +58,7 @@ if (!$CI -and !$Devcontainer -and
     }
 }
 '*** RUNNING PRE-SYNC TASKS' | Write-Progress
-if ($CI) {
+if ($Env:CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
     context_models_tools elevate-pyright-warnings
     try { scripts/Sync-Template.ps1 -Stay } catch [System.Management.Automation.NativeCommandExitException] {
@@ -78,7 +77,7 @@ if ($Devcontainer) {
         if (!($safeDirs -contains $dir)) { git config --global --add safe.directory $dir }
     }
 }
-if (!$CI) {
+if (!$Env:CI) {
     'SYNCING SUBMODULES' | Write-Progress
     Get-ChildItem '.git/modules' -Filter 'config.lock' -Recurse -Depth 1 | Remove-Item
     git submodule update --init --merge
@@ -92,7 +91,7 @@ context_models_tools compile $($High ? '--high' : '--no-high') | uv pip sync -
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 '*** RUNNING POST-SYNC TASKS' | Write-Progress
-if (!$CI) {
+if (!$Env:CI) {
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
     'PRE-COMMIT HOOKS INSTALLED' | Write-Progress -Done
