@@ -1,0 +1,6 @@
+[submodule "template"]
+	path = submodules/template
+	url = https://github.com/blakeNaccarato/copier-python.git
+[submodule "stubs"]
+	path = submodules/stubs
+	url = https://github.com/microsoft/python-type-stubs.git
