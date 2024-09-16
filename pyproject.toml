@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "context_models"
-version = "0.0.0"
+version = "0.0.1"
 description = "Context models"
 readme = "README.md"
 license = { file = "LICENSE" }
