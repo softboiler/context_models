@@ -114,7 +114,7 @@ def lock(directs: dict[str, Dep] | None = None, high: bool = False) -> str:
 
 
 def get_uv_version() -> str:
-    """Get version of `uv` at `bin/uv`."""
+    """Get version of `uv` at `uv`."""
     result = run(
         args=split("uv --version"), capture_output=True, check=False, text=True
     )
