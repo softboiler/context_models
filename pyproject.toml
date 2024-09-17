@@ -17,7 +17,7 @@ classifiers = [
   # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
   # "Programming Language :: Python :: 3.14",  # ? Not yet beta (https://peps.python.org/pep-0745)
 ]
-dependencies = []
+dependencies = ["pydantic>=2.9.1", "typing_extensions>=4.12.2"]
 [project.urls]
 Changes = "https://softboiler.github.io/context_models/changelog.html"
 Docs = "https://softboiler.github.io/context_models"
@@ -39,6 +39,8 @@ source = [
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
 code = ["src"]
+[tool.fawltydeps.custom_mapping]
+pydantic = ["pydantic", "pydantic_core"]
 
 [tool.pytest.ini_options]
 addopts = """
@@ -274,6 +276,18 @@ convention = "numpy"
 "scripts/context_models_tools/add_changes.py" = [
   "S603", # Allow shell expressions here
   "S607", # Allow shell expressions here
+]
+"src/context_models/serializers/**/*.py" = [
+  "D10",  # Allow missing docstrings in serializers that closely mirror Pydantic
+  "N802", # Classlike function names in serializers that closely mirror Pydantic
+]
+"src/context_models/validators/**/*.py" = [
+  "D10",  # Allow missing docstrings in validators that closely mirror Pydantic
+  "N802", # Classlike function names in validators that closely mirror Pydantic
+]
+"tests/context_models_tests/types_context_validators_serializers.py" = [
+  "D10",  # Allow missing docstrings in validators that closely mirror Pydantic
+  "N802", # Classlike function names in validators that closely mirror Pydantic
 ]
 "docs/**.ipynb" = [
   "E402", # Need to allow imports below patches in docs notebooks

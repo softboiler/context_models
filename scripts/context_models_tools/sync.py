@@ -116,7 +116,7 @@ def lock(directs: dict[str, Dep] | None = None, high: bool = False) -> str:
 def get_uv_version() -> str:
     """Get version of `uv` at `bin/uv`."""
     result = run(
-        args=split("bin/uv --version"), capture_output=True, check=False, text=True
+        args=split("uv --version"), capture_output=True, check=False, text=True
     )
     if result.returncode:
         raise RuntimeError(result.stderr)
@@ -144,7 +144,7 @@ class Compiler:
         """Command to reproduce compilation requirements."""
         time = datetime.now(UTC)
         return time, [
-            "bin/uv",
+            "uv",
             "pip",
             "compile",
             "--universal",

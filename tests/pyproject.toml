@@ -12,6 +12,8 @@ dependencies = [
   "pytest-custom-exit-code==0.3.0",
   "pytest-github-actions-annotate-failures==0.2.0",
   "pytest==8.2.2",
+  # ? Other deps
+  "pydantic>=2.9.1",
 ]
 
 [tool.fawltydeps]
