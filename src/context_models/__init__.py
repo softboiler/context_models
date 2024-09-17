@@ -405,7 +405,7 @@ class RootMapping(  # noqa: PLW1641
     def __init__(
         self,
         /,
-        root: MutableMapping[K, V] | PydanticUndefined = PydanticUndefined,
+        root: MutableMapping[K, V] | PydanticUndefined = PydanticUndefined,  # pyright: ignore[reportInvalidTypeForm]
         **data: V,
     ) -> None:
         if data:
