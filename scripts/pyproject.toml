@@ -9,7 +9,7 @@ description = "Tools."
 dependencies = [
   # ? Core script tools
   "cyclopts==2.9.3",
-  "dulwich==0.22.1",
+  "dulwich==1.2.5",
   "ipython==8.26.0",
   "pipx==1.6.0",
   "pydantic-settings>=2.5.2",
